@@ -1,0 +1,101 @@
+)(<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#D3D3D3">
+<meta name="format-detection" content="telephone=no">
+<title>归巢失物招领 v1.3</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/panels.css">
+<link rel="stylesheet" href="css/effects.css">
+</head>
+<body>
+
+<!-- ========== 竖屏拦截 ========== -->
+<div id="rotate-tip" class="rotate-tip">
+  <div class="rotate-box">
+    <p class="rb-title">[请旋转设备]</p>
+    <p class="rb-text">归巢系统仅支持横向登记。</p>
+    <p class="rb-code">ERR::ORIENTATION</p>
+  </div>
+</div>
+
+<!-- ========== 启动 / 内容警告 ========== -->
+<div id="boot" class="boot">
+  <div class="boot-inner window">
+    <div class="titlebar small">UNCLAIMED_ECHOES_07.exe</div>
+    <div class="boot-body">
+      <pre class="boot-logo">UNCLAIMED_ECHOES_07</pre>
+      <p class="boot-sub">A Tetrad of Lost Names / 四重失名</p>
+
+      <div class="boot-warn">
+        <p class="bw-h">[ 内容警告 ]</p>
+        <p>本程序含心理恐怖、文本异常、闪烁画面与虚构机构。</p>
+        <p>所有角色、账号、地址、机构均为虚构。</p>
+        <p>本程序<strong>不读取</strong>你的真实姓名、摄像头、麦克风、剪贴板历史，也不读取其他应用的内容。</p>
+      </div>
+
+      <p class="boot-plain">难度：困难。程序不提供自动解码。<br>请自行准备一种「外部记录」方式（备忘录 / 文本文件 / 纸笔均可）。</p>
+
+      <div class="boot-actions">
+        <button id="boot-start" class="btn btn-primary" type="button">我已知晓，开始值班</button>
+        <button id="boot-continue" class="btn hidden" type="button">继续上次值班</button>
+      </div>
+      <p class="boot-foot">归巢失物招领平台 v1.3 · 临港市城市档案处</p>
+      <div class="boot-credit">
+        <p class="bc-name">制作：啾啾_koi122</p>
+        <p class="bc-note">一次制作有bug请见谅</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 主界面 ========== -->
+<div id="app" class="app hidden">
+  <header id="titlebar" class="titlebar">
+    <span id="titlebar-text">归巢失物招领 v1.3</span>
+    <span id="titlebar-clock" class="titlebar-clock">--:--:--</span>
+  </header>
+
+  <nav id="navbar" class="navbar">
+    <button class="nav-btn" data-tab="inbox" type="button">收件箱<i class="nav-badge" id="badge-inbox">0</i></button>
+    <button class="nav-btn" data-tab="ledger" type="button">登记簿</button>
+    <button class="nav-btn" data-tab="monitor" type="button">监控</button>
+    <button class="nav-btn" data-tab="rules" type="button">规则</button>
+    <button class="nav-btn" data-tab="verify" type="button">校验器</button>
+    <button class="nav-btn" data-tab="more" type="button">更多</button>
+  </nav>
+
+  <main id="content" class="content" tabindex="-1"></main>
+
+  <footer id="statusbar" class="statusbar">
+    <button id="btn-net" class="sb-btn" type="button">网络:开</button>
+    <button id="btn-offduty" class="sb-btn" type="button">下班</button>
+    <span id="aff-pixels" class="aff-pixels" title="好感度"></span>
+    <span class="sb-spacer"></span>
+    <button id="btn-search" class="sb-btn" type="button">搜索</button>
+  </footer>
+</div>
+
+<!-- ========== 覆盖层 / 效果层 ========== -->
+<div id="overlay-root"></div>
+<div id="glitch-layer" class="glitch-layer hidden" aria-hidden="true"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="js/store.js"></script>
+<script src="js/data.js"></script>
+<script src="js/mails.js"></script>
+<script src="js/reactions.js"></script>
+<script src="js/quarrel.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/glitch.js"></script>
+<script src="js/endingfx.js"></script>
+<script src="js/endings.js"></script>
+<script src="js/views.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

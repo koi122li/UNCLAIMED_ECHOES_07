@@ -1,0 +1,155 @@
+/* ============================================================
+   UNCLAIMED_ECHOES_07  ·  base.css
+   变量 / 字体 / reset / 全局排版
+   ============================================================ */
+
+/* ---------- 本地像素字体（仅 latin 子集，中文走系统等宽） ---------- */
+@font-face {
+  font-family: 'VT323';
+  src: url('../fonts/VT323-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0000-00FF;
+}
+@font-face {
+  font-family: 'PressStart';
+  src: url('../fonts/PressStart2P-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0000-00FF;
+}
+
+:root {
+  /* 配色（文档 4.2） */
+  --bg: #D3D3D3;
+  --bg-alt: #E0E0E0;
+  --ink: #000000;
+  --accent: #002FA7;
+  --btn-bg: #C0C0C0;
+  --btn-press-bg: #002FA7;
+  --btn-press-ink: #FFFFFF;
+  --glitch-bg: #000000;
+  --glitch-ink: #002FA7;
+  --dim: #5A5A5A;
+  --line: #000000;
+
+  /* 安全区 */
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+
+  /* 布局尺寸（文档 4.1） */
+  --h-title: 26px;
+  --h-status: 28px;
+  --w-nav: 72px;
+  --tap: 44px;
+
+  /* 字体栈：VT323 只覆盖 latin，中文自动回落到系统等宽 */
+  --font-ui: 'VT323', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC',
+             'Microsoft YaHei', monospace;
+  --font-title: 'PressStart', 'VT323', 'PingFang SC', monospace;
+  --font-mono: 'VT323', ui-monospace, 'Courier New', monospace;
+
+  /* 正文尺寸：VT323 视觉偏小，中文落到系统字体时又会偏大，
+     取 13px 作为折中基准，编码/数字单独放大 */
+  --fs-body: 13px;
+  --fs-small: 11px;
+  --fs-title: 11px;
+  --fs-code: 17px;
+  --lh: 1.55;
+
+  --vh: 1vh;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: var(--lh);
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  image-rendering: pixelated;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 文本可复制区（正文、编码） */
+.selectable,
+.selectable * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+h1, h2, h3, h4 {
+  font-size: var(--fs-title);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+p { margin: 0 0 6px; }
+p:last-child { margin-bottom: 0; }
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  letter-spacing: 0.6px;
+}
+
+.hidden { display: none !important; }
+.dim { color: var(--dim); }
+.ink-accent { color: var(--accent); }
+.center { text-align: center; }
+.nowrap { white-space: nowrap; }
+
+/* 通用滚动条（细、黑） */
+.scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #000 var(--bg-alt);
+}
+.scroll::-webkit-scrollbar { width: 4px; height: 4px; }
+.scroll::-webkit-scrollbar-track { background: var(--bg-alt); }
+.scroll::-webkit-scrollbar-thumb { background: #000; }
+
+.scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.scroll-x::-webkit-scrollbar { height: 4px; }
+.scroll-x::-webkit-scrollbar-thumb { background: #000; }
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

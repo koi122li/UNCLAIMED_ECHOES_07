@@ -1,0 +1,289 @@
+/* ============================================================
+   UNCLAIMED_ECHOES_07  ·  effects.css
+   崩坏 / 乱码 / 闪屏 / 抖动 / 扫描线
+   原则：不覆盖系统导航与状态栏，最长 900ms，不打断操作
+   ============================================================ */
+
+/* ---------------- 乱码覆盖层（只盖内容区） ---------------- */
+.glitch-layer {
+  position: fixed;
+  z-index: 5500;
+  left: var(--w-nav);
+  top: calc(var(--h-title) + 2px);
+  right: 0;
+  bottom: calc(var(--h-status) + 2px);
+  padding: 8px 10px;
+  background: var(--glitch-bg);
+  color: var(--glitch-ink);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: 1px;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-all;
+  pointer-events: none;
+}
+.glitch-layer .g-stable { color: var(--accent); }
+.glitch-layer .g-sig { color: #fff; }
+.glitch-layer .g-noise { color: #1a1a1a; }
+.glitch-layer.scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.55) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  pointer-events: none;
+}
+
+/* ---------------- 全内容区黑屏（崩坏 7-3） ---------------- */
+.glitch-black {
+  position: fixed;
+  z-index: 5600;
+  left: var(--w-nav);
+  top: calc(var(--h-title) + 2px);
+  right: 0;
+  bottom: calc(var(--h-status) + 2px);
+  background: #000;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  letter-spacing: 3px;
+  text-align: center;
+  padding: 12px;
+  pointer-events: none;
+}
+
+/* ---------------- 抖动 ---------------- */
+.shake { animation: shake 0.2s steps(2, end) 1; }
+@keyframes shake {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2px, 1px); }
+  50%  { transform: translate(2px, -1px); }
+  75%  { transform: translate(-1px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------------- 反色闪屏 ---------------- */
+.flash-invert { animation: flash-invert 0.12s steps(1, end) 4; }
+@keyframes flash-invert {
+  0%   { filter: none; }
+  50%  { filter: invert(1); }
+  100% { filter: none; }
+}
+
+/* ---------------- 内容区被替换（崩坏 6-2 重复行） ---------------- */
+.repeat-fill {
+  position: fixed;
+  z-index: 5500;
+  left: var(--w-nav);
+  top: calc(var(--h-title) + 2px);
+  right: 0;
+  bottom: calc(var(--h-status) + 2px);
+  background: var(--bg);
+  color: var(--ink);
+  padding: 10px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+  pointer-events: none;
+  border-left: 2px solid #000;
+}
+.repeat-fill .rf-line { white-space: nowrap; overflow: hidden; text-overflow: clip; }
+
+/* ---------------- 打字机光标 ---------------- */
+.caret::after {
+  content: "_";
+  animation: caret 0.8s steps(1, end) infinite;
+}
+@keyframes caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ---------------- 邮件标题闪烁（有未读时） ---------------- */
+.blink { animation: blink 0.7s steps(1, end) infinite; }
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.25; }
+}
+
+/* ---------------- 像素噪点（启动屏背景） ---------------- */
+.pixel-noise {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 3px);
+}
+
+/* ---------------- 减少闪烁模式 ---------------- */
+body.reduced-motion .shake,
+body.reduced-motion .flash-invert,
+body.reduced-motion .blink {
+  animation: none !important;
+}
+body.reduced-motion .glitch-layer {
+  /* 静态乱码停留，不做位移动画 */
+  animation: none !important;
+}
+
+/* ---------------- 一次性强调闪现（崩坏 6-3 好心输出） ---------------- */
+.hint-flash {
+  animation: hint-flash 0.5s steps(1, end) 1;
+}
+@keyframes hint-flash {
+  0%   { background: #000; color: var(--accent); }
+  99%  { background: #000; color: var(--accent); }
+  100% { background: var(--bg); color: var(--ink); }
+}
+
+/* ---------------- 邮件发件人变 [你]（崩坏 7-4） ---------------- */
+.ghost-from .mi-from {
+  animation: ghost-from 0.1s steps(2, end) 4;
+}
+@keyframes ghost-from {
+  0%, 100% { color: inherit; }
+  50% { color: #fff; background: var(--accent); }
+}
+
+/* ---------------- 桌面图标出现（I 的入侵） ---------------- */
+.desktop-icons {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 40;
+}
+.desktop-icon {
+  width: 34px;
+  height: 34px;
+  border: 2px solid #000;
+  background: var(--bg-alt);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--accent);
+  cursor: pointer;
+  filter: blur(0.6px);
+  opacity: 0.75;
+}
+.desktop-icon.clear { filter: none; opacity: 1; }
+
+/* ============================================================
+   结局表现层（增补包）
+   只覆盖内容区，不盖系统导航与状态栏
+   ============================================================ */
+
+/* ---------------- 好结局 · 蓝屏 ---------------- */
+.bluescreen {
+  position: fixed;
+  z-index: 9600;
+  inset: 0;
+  background: #002FA7;
+  overflow: hidden;
+}
+.bs-scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.12) 0 1px,
+    transparent 1px 3px
+  );
+  pointer-events: none;
+}
+.bs-noise {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 4px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.bs-text {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  color: #000;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+.bluescreen.soft .bs-scan,
+.bluescreen.soft .bs-noise { display: none; }
+
+/* ---------------- 坏结局 · 红屏 ---------------- */
+.redscreen {
+  position: fixed;
+  z-index: 9600;
+  inset: 0;
+  background: #A70000;
+  overflow: hidden;
+}
+.rs-scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0 1px,
+    transparent 1px 3px
+  );
+  pointer-events: none;
+}
+.rs-noise {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0 1px, transparent 1px 4px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.rs-text {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  color: #000;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1.2;
+}
+/* 减少刺激：静态深红，不闪 */
+.redscreen.soft { background: #7A0000; }
+.redscreen.soft .rs-scan,
+.redscreen.soft .rs-noise { display: none; }
+.redscreen.black { background: #000; }
+
+/* ---------------- 坏结局 · 字幕闪现（与结局交替穿插） ---------------- */
+.subscreen {
+  position: fixed;
+  z-index: 9600;
+  inset: 0;
+  background: #000;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.sub-line {
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: #000;
+  -webkit-text-stroke: 1px #002FA7;
+  text-shadow: 0 0 6px rgba(0, 47, 167, 0.9);
+  padding: 6px 16px;
+  background: transparent;
+  text-align: center;
+  line-height: 1.5;
+  white-space: nowrap;
+}
